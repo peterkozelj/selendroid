@@ -52,6 +52,7 @@ public class SelendroidWebDriver {
   private ServerInstrumentation serverInstrumentation = null;
   private SessionCookieManager sm = new SessionCookieManager();
   private SelendroidWebChromeClient chromeClient = null;
+public String frame;
 
   public SelendroidWebDriver(ServerInstrumentation serverInstrumentation, String handle) {
     this.serverInstrumentation = serverInstrumentation;
@@ -139,8 +140,13 @@ public class SelendroidWebDriver {
 
   public Object executeAtom(AndroidAtoms atom, JSONArray args) throws JSONException {
     final String myScript = atom.getValue();
+    
+    String window = "window;";
+    if (frame!=null){
+    	window = "document.getElementById('"+frame+"').contentWindow;";
+    }
     String scriptInWindow =
-        "(function(){ " + " var win; try{win=window;}catch(e){win=window;}" + "with(win){return ("
+        "(function(){ " + " var win; try{win="+window+"}catch(e){win="+window+"}" + "with(win){return ("
             + myScript + ")(" + convertToJsArgs(args) + ")}})()";
     String jsResult = executeJavascriptInWebView("alert('selendroid:'+" + scriptInWindow + ")");
 
@@ -334,6 +340,9 @@ public class SelendroidWebDriver {
   Object injectJavascript(String toExecute, boolean isAsync, Object args) throws JSONException {
     String executeScript = AndroidAtoms.EXECUTE_SCRIPT.getValue();
     String window = "window;";
+    if (frame!=null){
+    	window = "document.getElementById('"+frame+"').contentWindow;";
+    }
     toExecute =
         "var win_context; try{win_context= " + window + "}catch(e){"
             + "win_context=window;}with(win_context){" + toExecute + "}";

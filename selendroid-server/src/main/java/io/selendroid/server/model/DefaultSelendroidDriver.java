@@ -20,6 +20,7 @@ import io.selendroid.android.KeySender;
 import io.selendroid.android.ViewHierarchyAnalyzer;
 import io.selendroid.android.WindowType;
 import io.selendroid.android.internal.Dimension;
+import io.selendroid.android.internal.DomWindow;
 import io.selendroid.exceptions.NoSuchElementException;
 import io.selendroid.exceptions.SelendroidException;
 import io.selendroid.server.Session;
@@ -409,7 +410,7 @@ public class DefaultSelendroidDriver implements SelendroidDriver {
       AndroidElement element = null;
 
 
-      Object result = driver.executeAtom(AndroidAtoms.FIND_ELEMENT, strategy, locator);
+      Object result = /*window!=null ? driver.executeAtom(AndroidAtoms.FIND_ELEMENT, strategy, locator, window) :*/ driver.executeAtom(AndroidAtoms.FIND_ELEMENT, strategy, locator);
       if (result == null) {
         return null;
       }
@@ -596,5 +597,11 @@ public class DefaultSelendroidDriver implements SelendroidDriver {
       selendroidWebDriver.remove(url, name);
     }
   }
+
+@Override
+public void switchFrame(String id) {
+	System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "+ id + " " + (id==null));
+	selendroidWebDriver.frame = id;
+}
 
 }

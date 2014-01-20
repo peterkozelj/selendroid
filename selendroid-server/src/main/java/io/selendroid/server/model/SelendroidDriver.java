@@ -70,5 +70,7 @@ public interface SelendroidDriver {
 
   public Dimension getWindowSize();
 
+  public void switchFrame(String id);
+
 
 }

@@ -59,6 +59,7 @@ import io.selendroid.server.handler.SendKeys;
 import io.selendroid.server.handler.SetImplicitWaitTimeout;
 import io.selendroid.server.handler.SingleTapOnElement;
 import io.selendroid.server.handler.SubmitForm;
+import io.selendroid.server.handler.SwitchFrame;
 import io.selendroid.server.handler.SwitchWindow;
 import io.selendroid.server.handler.UnknownCommandHandler;
 import io.selendroid.server.handler.Up;
@@ -98,6 +99,8 @@ public class AndroidServlet extends BaseServlet {
     postHandler.put("/wd/hub/session/:sessionId/window", SwitchWindow.class);
     getHandler.put("/wd/hub/session/:sessionId/window/:windowHandle/size",
         GetWindowSize.class);
+    postHandler.put("/wd/hub/session/:sessionId/frame", SwitchFrame.class);
+    
     postHandler.put("/wd/hub/session/:sessionId/element/:id/submit", SubmitForm.class);
     postHandler.put("/wd/hub/session/:sessionId/keys", SendKeyToActiveElement.class);
     getHandler.put("/wd/hub/session/:sessionId/title", GetPageTitle.class);
@@ -125,7 +128,7 @@ public class AndroidServlet extends BaseServlet {
     postHandler.put("/wd/hub/session/:sessionId/touch/flick", Flick.class);
     getHandler.put("/wd/hub/session/:sessionId/window_handle", GetWindowHandle.class);
     getHandler.put("/wd/hub/session/:sessionId/window_handles", GetWindowHandles.class);
-
+    
     // currently not yet supported
     getHandler.put("/wd/hub/session/:sessionId/orientation", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/orientation", UnknownCommandHandler.class);
@@ -141,7 +144,7 @@ public class AndroidServlet extends BaseServlet {
     getHandler.put("/wd/hub/session/:sessionId/ime/activated", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/ime/deactivate", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/ime/activate", UnknownCommandHandler.class);
-    postHandler.put("/wd/hub/session/:sessionId/frame", UnknownCommandHandler.class);
+    //postHandler.put("/wd/hub/session/:sessionId/frame", UnknownCommandHandler.class);
     deleteHandler.put("/wd/hub/session/:sessionId/window", UnknownCommandHandler.class);
     postHandler.put("/wd/hub/session/:sessionId/window/:windowHandle/size",
         UnknownCommandHandler.class);
